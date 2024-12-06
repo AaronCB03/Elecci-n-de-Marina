@@ -1,2 +1,2 @@
-# Elecci-n-de-Marina
+# Eleccion-de-Marina
 Vota por tu madrina favorita
