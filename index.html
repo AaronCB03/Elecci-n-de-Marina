@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vota por tu Madrina Favorita</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f7;
+      color: #333;
+      text-align: center;
+      margin: 0;
+    }
+
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 40px 20px;
+      border-radius: 10px 10px 0 0;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    .instructions {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    .instagram-link {
+      color: #e74c3c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .instagram-link:hover {
+      text-decoration: underline;
+    }
+
+    #loginWithInstagram {
+      background-color: #e74c3c;
+      color: white;
+      padding: 12px 30px;
+      font-size: 1.1em;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+
+    #loginWithInstagram:hover {
+      background-color: #c0392b;
+    }
+
+    .carousel-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .carousel-item {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      width: 200px;
+      text-align: center;
+    }
+
+    .carousel-item img {
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 15px;
+    }
+
+    .carousel-item h2 {
+      font-size: 1.4em;
+      margin-bottom: 15px;
+    }
+
+    .vote-btn {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.1em;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    .vote-btn:hover {
+      background-color: #2980b9;
+    }
+
+    .results {
+      margin-top: 50px;
+      background-color: #ecf0f1;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .results h3 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #resultList {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    #resultList li {
+      font-size: 1.2em;
+      margin: 10px 0;
+    }
+
+    footer {
+      margin-top: 50px;
+      padding: 10px;
+      background-color: #2c3e50;
+      color: white;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>¡Vota por tu Madrina Favorita!</h1>
+    <p class="instructions">
+      Antes de participar, sigue nuestra cuenta oficial en Instagram: 
+      <a href="https://www.instagram.com/forbet.oficial?igsh=OWhqYnM0YXVyejY4" target="_blank" class="instagram-link">@forbet.oficial</a>
+    </p>
+    <button id="loginWithInstagram">Inicia sesión con Instagram</button>
+  </header>
+
+  <section class="carousel-container">
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/180" alt="Madrina 1">
+      <h2>Madrina 1</h2>
+      <button class="vote-btn" data-participant="1">Votar</button>
+    </div>
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/180" alt="Madrina 2">
+      <h2>Madrina 2</h2>
+      <button class="vote-btn" data-participant="2">Votar</button>
+    </div>
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/180" alt="Madrina 3">
+      <h2>Madrina 3</h2>
+      <button class="vote-btn" data-participant="3">Votar</button>
+    </div>
+    <div class="carousel-item">
+      <img src="https://via.placeholder.com/180" alt="Madrina 4">
+      <h2>Madrina 4</h2>
+      <button class="vote-btn" data-participant="4">Votar</button>
+    </div>
+  </section>
+
+  <section class="results">
+    <h3>Resultados de la votación</h3>
+    <ul id="resultList"></ul>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Todos los derechos reservados | Hecho por tu equipo de votación</p>
+  </footer>
+
+  <script>
+    // Variables para gestionar los votos
+    let userHasVoted = false;
+    let votes = [0, 0, 0, 0]; // Contador de votos para cada madrina
+
+    // Evento para el botón "Inicia sesión con Instagram"
+    document.getElementById("loginWithInstagram").addEventListener("click", function() {
+      window.open("https://www.instagram.com/forbet.oficial?igsh=OWhqYnM0YXVyejY4", "_blank");
+    });
+
+    // Manejo de la votación
+    document.querySelectorAll(".vote-btn").forEach(button => {
+      button.addEventListener("click", function() {
+        if (!userHasVoted) {
+          const participant = button.getAttribute("data-participant");
+          votes[participant - 1] += 1;
+          userHasVoted = true;
+          alert("¡Gracias por tu voto!");
+
+          // Mostrar los resultados
+          showResults();
+        } else {
+          alert("Ya has votado, no puedes votar nuevamente.");
+        }
+      });
+    });
+
+    // Mostrar los resultados de la votación
+    function showResults() {
+      const resultList = document.getElementById("resultList");
+      resultList.innerHTML = ""; // Limpiar la lista antes de mostrarla
+
+      votes.forEach((vote, index) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `Madrina ${index + 1}: ${vote} votos`;
+        resultList.appendChild(listItem);
+      });
+    }
+  </script>
+
+</body>
+</html>
